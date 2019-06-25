@@ -1,0 +1,39 @@
+function salario(funcionarios){
+    var aux="", maior="", aux2="", acum=0, acumSal=0, mediaH="", mediaSal="", menor="";
+    menor=funcionarios[0].salarioHora*funcionarios[0].qtHoras;
+    for(var i=0; i<funcionarios.length; i++){
+        var salarioTotal=funcionarios[i].salarioHora*funcionarios[i].qtHoras;
+        var arredondado = parseFloat(salarioTotal.toFixed(2));
+        document.write(funcionarios[i].nome+" SALARIO: "+arredondado+"<br>");
+        acum=acum+funcionarios[i].qtHoras;
+        acumSal=acumSal+salarioTotal;
+        if(salarioTotal>maior){
+            maior=salarioTotal;
+            aux2=funcionarios[i].nome;
+        }
+        if(salarioTotal<menor){
+            menor=salarioTotal;
+            aux=funcionarios[i].nome;
+        }
+    }
+    mediaH=acum/funcionarios.length;
+    mediaSal=acumSal/funcionarios.length;
+    document.write("O funcionario: "+aux2+" tem o maior salario que eh: R$:"+maior);
+    document.write("<br> O funcionario: "+aux+" tem o menor salario que eh: R$:"+menor);
+    document.write("<br> Media de horas trabalhadas: "+mediaH);
+    document.write("<br> Media salarial: "+mediaSal.toFixed(2));
+}
+
+
+function valores(){
+    salario([{"nome":"NOMEFUNC0","salarioHora":25.60,"qtHoras":25}
+        ,{"nome":"NOMEFUNC1","salarioHora":15.99,"qtHoras":80}
+        ,{"nome":"NOMEFUNC2","salarioHora":5.60,"qtHoras":100}
+        ,{"nome":"NOMEFUNC3","salarioHora":78.50,"qtHoras":50}
+        ,{"nome":"NOMEFUNC4","salarioHora":25.60,"qtHoras":70}
+        ,{"nome":"NOMEFUNC5","salarioHora":58.44,"qtHoras":100}
+        ,{"nome":"NOMEFUNC6","salarioHora":17,"qtHoras":80}
+        ,{"nome":"NOMEFUNC7","salarioHora":9.99,"qtHoras":70}
+        ,{"nome":"NOMEFUNC8","salarioHora":40,"qtHoras":100}]);  
+}
+

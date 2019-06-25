@@ -1,0 +1,152 @@
+//MDN é a melhor referência para Javascript https://developer.mozilla.org
+
+//Sobre map:
+
+var f = function(e){
+    return (e+1);
+}
+/*
+[]          <- map f [1,2,3,4,5]
+[2]         <- map f   [2,3,4,5]
+[2,3]       <- map f     [3,4,5]    
+[2,3,4]     <- map f       [4,5]
+[2,3,4,5]   <- map f         [5]
+[2,3,4,5,6] <- map f          []
+*/
+
+[1,2,3,4,5].map(f);
+//map é uma função que pertence as listas, portanto [...].map(...)
+//é uma declaração válida
+
+//Simulado
+
+//Ex1. Deixe invisível todas as tags [que] contenham a classe
+//`classe3` e todos os parágrafos [tag `p`].
+
+//querySelectorAll pega uma lista estática do tipo `NodeList`
+//de elementos do DOM
+document.querySelectorAll("p, .classe3").forEach(function(e) {
+    e.style.display="none";
+});
+//extra: outra maneira de se fazer
+[].map.call(document.querySelectorAll("p, .classe3"), function(e) {
+    e.style.display="none";
+});
+//note que como o `map` está sendo usado, uma lista de `undefined`
+//é retornada, ao invés de apenas um `undefined`
+//por hora, ignore o `call`, este é apenas um exemplo, a estrutura
+//que o utiliza irá ser mostrada nas próximas aulas
+
+//Ex2. Ao digitar uma string em uma caixa de texto `type=number`
+//de id `t1`, esta [o texto] deve aparecer em uma `div` criada via 
+//javascript, em ordem reversa. Suponha que o evento `oninput` já
+//esteja feito no HTML, para facilitar.
+
+// <input oninput="ex2">
+
+var ex2 = function(e) {
+    var input = document.getElementById("t1"); // <- tecnicamente a mesma coisa
+  //var input = e.currentTarget;               // <- tecnicamente a mesma coisa
+  //var input = this.currentTarget;            // <- tecnicamente a mesma coisa
+    var div = document.createElement("div");
+    div.innerHTML = Array.from(input.value).reverse().join("");
+    // "ola mundo" <- input.value
+    // ['o','l','a',' ','m','u','n','d','o'] <- Array.from(input.value)
+    // ['o','d','n','u','m',' ','a','l','o'] <- Array.from(input.value).reverse()
+    // "odnum alo" <- Array.from(input.value).reverse().join("")
+    document.body.appendChild(div);
+}
+
+//Ex3. Faça uma função que receba um vetor de palavras e monte uma
+//página que contenha uma `ul` e várias `li`s contendo cada palavra
+//desse vetor. As palavras de tamanho par devem aparecer com cor
+//de fundo verde e as de tamanho ímpar, amarelo.
+
+//ex3 é uma função desacoplada de qualquer página
+var ex3 = function(palavras) {
+    var ul = document.createElement("ul");
+    //["olar","mundo"]
+    for (p in palavras) {
+        var li = document.createElement("li");
+        li.innerHTML = p;
+        if (p.length % 2 == 0) {
+            li.style.backgroundColor = "green";
+        } else {
+            li.style.backgroundColor = "yellow";
+        }
+        ul.appendChild(li);
+    }
+    /*
+    <ul>
+        <li style="backgroundColor:green">olar</li>
+        <li style="backgroundColor:yellow">mundo</li>
+    </ul>
+    */
+    return ul;
+}
+
+//por ex3 ser desacoplada e suficientemente genérica, é possível
+//utilizá-la com outras funções em conjunto com o HTML
+// <textarea oninput="aux">
+// <div id="div">
+var aux = function(e) {
+    var ul = ex3(e.currentTarget.value.split(" "));
+    var div = document.getElementById("div")
+    div.innerHTML = "";
+    div.appendChild(ul);
+}
+
+//Ex4. Considere a seguinte página:
+/*
+<html>
+    <head>
+        <script>
+            function swap(v,i,j) {
+               var aux = v[i];
+                v[i] = v[j];
+                v[j] = aux;
+            }
+            function exibir(v) {
+                for (i in v) {
+                    document.write(v[i] + "<br>");
+                }
+            }
+            function doSomething(v) {
+                for (var i = 0; i < v.length; i++) {
+                    for (var j = i; j < v.length; j++) {
+                        if (v[j] <= v[i]) {
+                            swap(v, i, j);
+                        }
+                    }
+                }
+                exibir(v);
+            }
+        </script>
+    </head>
+    <body>
+        <script>
+            doSomething([2,-3,6,-9,4]);
+        </script>
+    </body>
+</html>
+*/
+
+//é possível solucionar esse exercício com um teste de mesa ou
+//simplesmente usar sua percepção e deduzir a solução a partir
+//dos nomes das funções e outros pontos chaves, como por exemplo
+//o if (v[j] <= v[i]), que denota que algo está sendo organizado
+
+//a. Quais serão as saídas no HTML?
+/*
+-9<br>-3<br>2<br>4<br>6<br>
+
+** OU **
+
+-9
+-3
+2
+4
+6
+*/
+//b. O que faz o script? Descreva sucintamente.
+// Ordena a lista em ordem crescente e a escreve na página.

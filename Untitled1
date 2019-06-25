@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+        </script>
+        <script>
+            $(main);
+            
+            function ex1(){
+                var imgs = document.querySelectorAll("img");
+                var arr = Array.prototype.slice.call(imgs);
+                arr.forEach(function(x){
+                    x.src = "erro.jpg";
+                });
+            }
+            
+            function ex2(){
+                //a
+                $("input").keyup(function(){
+                    var num = parseInt($(this).val());
+                    $("#d1").html(2*num);
+                });
+                
+                //b
+                $("#b1").click(function(){
+                    $(".classe1").hide();
+                    $("p .classe2").html("Clickado");
+                });
+            }
+            
+            function ex3(){
+                var Lampada = function(estado, qtAcendimentos){
+                    this.estado = estado;
+                    this.qtAcendimentos = qtAcendimentos;
+                };
+                
+                Lampada.prototype.checaEstado = function(){
+                    alert(this.estado);
+                    alert(this.qtAcendimentos);
+                }
+                
+                Lampada.prototype.clique = function(){
+                    if (this.estado == "acesa"){
+                        this.estado = "apagada";
+                    }else{
+                        this.estado = "acesa";
+                        this.qtAcendimentos++;
+                    }
+                }
+                
+            }
+            
+            function main(){
+                $("button").addClass("naoValido");
+                ex4();
+            }
+            
+            function ex4(){
+                $("input").blur(function(){
+                    if($("#b1").val()>0 && $("#b2").val()>0){
+                        $("button").removeClass("naoValido");
+                        $("button").addClass("valido");
+                    }else{
+                        $("button").removeClass("valido");
+                        $("button").addClass("naoValido");
+                    }
+                });
+                $("button").click(function(){
+                   //ou: $(this).attr("class")
+                   if(document.querySelector("button").className == "valido"){
+                       var peso = parseFloat($("#b1").val());
+                       var altura = parseFloat($("#b2").val());
+                       $("p").html(peso/(altura*altura));
+                   }else{
+                       $("p").html("Erro..");
+                   }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <form>
+            Peso: <input type="number" id="b1" step="0.01"/>
+            Altura: <input type="number" id="b2" step="0.01"/>
+        </form>
+        <button> Calcular </button>
+        <p></p>
+    </body>
+</html>
+
+//pintar as li's com ForEach
+/*function teste(){
+    document.querySelectorAll("li").forEach(function(li){
+        li.style.backgroundColor = "yellow";
+    })
+}*/
+
+
+/*function teste(){
+    //TROCAMOS OS INDICES PELOS ELEMENTOS
+    var aux = Array.from(document.querySelectorAll("li"));
+    aux.filter(function(x){
+        return x.innerHTML != "TRES";
+    }).forEach(function(elem){
+        elem.style.backgroundColor = "yellow";   
+    });
+}*/
